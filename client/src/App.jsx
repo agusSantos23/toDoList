@@ -32,7 +32,7 @@ function App() {
             </nav>
           </header>
 
-          <main className="h-auto w-7/12 mx-auto mt-28 p-7 border-4 border-myColor_4 rounded-t-lg">
+          <main className="h-auto min-h-min w-7/12 mx-auto mt-28 p-5 border-4 border-myColor_4 rounded-t-lg">
             <Routes>
               <Route path="/" element={<Home />}/>
               <Route path="/login" element={<Login />}/>
