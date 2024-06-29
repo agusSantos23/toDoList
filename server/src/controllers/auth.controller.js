@@ -2,15 +2,15 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/user.model.js'
 import { createdAccessToken } from '../libs/jwt.js'
-import router from '../routes/auth.routes.js'
 
 
 export const register = async (req,res) =>{
 
     const {email, username, password} = req.body
     
-
     try {
+        const userFound = await User.findOne({email})
+        if(userFound) return res.status(400).json(["The email is already in use"])
 
         const passwordHash = await bcrypt.hash(password,10)
 
@@ -19,7 +19,6 @@ export const register = async (req,res) =>{
             email,
             password: passwordHash,
         })
-        
 
         const userSaved = await newUser.save()
 
@@ -30,11 +29,7 @@ export const register = async (req,res) =>{
         })
 
         res.cookie('token',token)
-        res.json({
-            message: "User created successfully"
-        })
-
-
+        res.json(newUser)
 
     } catch (error) {
         res.status(500).json({message: error.message})

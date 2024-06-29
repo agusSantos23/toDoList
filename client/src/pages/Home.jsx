@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import Button from "./common/Button";
+import Button from "../components/Button";
 
 function Home(){
     const textareaRef = useRef(null);
