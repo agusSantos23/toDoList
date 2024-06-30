@@ -22,9 +22,11 @@ function Register() {
 
     return (
         <>
+            <h2 className='text-white text-3xl font-extrabold'>Register</h2>
+
             <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col items-center justify-between h-80 mb-10"
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col items-center justify-start gap-10 h-80 mb-10"
             >
             <div className="flex flex-col justify-between gap-1">
                 <Input
@@ -54,8 +56,7 @@ function Register() {
                     nameForUser="Nombre de Usuario"
                 />
 
-                <Input
-                
+                <Input        
                     {...register('password', { 
                         required: 'Password is required',
                         minLength:{
@@ -78,7 +79,7 @@ function Register() {
 
             <div className='relative'>
                 {registerErrors.map((error, i) => (
-                    <div key={i} className='p-3 absolute bottom-0 right-0 max-w-72 bg-red-400 text-xl text-white border-b-4 border-red-800'>
+                    <div key={i} className='p-3 absolute bottom-0 right-0 w-72 bg-red-400 text-xl text-white border-b-4 border-red-800'>
                         {error}
                     </div>
                 ))}

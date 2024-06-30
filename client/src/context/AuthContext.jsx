@@ -1,5 +1,6 @@
-import { useState, createContext, useContext } from "react";
-import { registerRequest } from "../api/auth.js";
+import { useState, createContext, useContext, useEffect } from "react";
+import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth.js";
+import Cookies from 'js-cookie'
 
 export const AuthContext = createContext();
 
@@ -28,8 +29,59 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const signin = async (userData) =>{
+        try {
+            const res = await loginRequest(userData);
+            setUser(res.data)
+            setAuthenticated(true)
+        } catch (error) {
+            setErrors(error.response.data)
+        }
+    }
+
+    useEffect(()=>{
+
+        if(errors.length>0){
+            const timer = setTimeout(()=>{
+                setErrors([])
+            },5000)
+
+            return () => clearTimeout(timer)
+        }
+
+    },[errors])
+
+
+    useEffect(()=>{
+        async function checkLogin (){
+            const cookies = Cookies.get();
+
+        
+            if(!cookies.token) {
+                setAuthenticated(false)
+                return setUser(null)   
+            }
+
+            try {
+                const res = await verifyTokenRequest(cookies.token)
+                if(!res.data) setAuthenticated(false)
+
+                setAuthenticated(true)
+                setUser(res.data) 
+            } catch (error) {
+                setAuthenticated(false)
+                setUser(null)
+            }
+            
+            
+        }
+        checkLogin()
+
+    }, [])
+
+
     return (
-        <AuthContext.Provider value={{ signup, user, isAuthenticated, errors}}>
+        <AuthContext.Provider value={{ signup, signin ,user, isAuthenticated, errors}}>
             {children}
         </AuthContext.Provider>
     );

@@ -36,9 +36,9 @@ function App() {
                 <main className="h-auto min-h-min w-7/12 mx-auto mt-28 p-5 border-4 border-myColor_4 rounded-t-lg">
 
                     <Routes>
-                    <Route path="/" element={<Home />}/>
-                    <Route path="/login" element={<Login />}/>
-                    <Route path="/register" element={<Register />}/>
+                        <Route path="/" element={<Home />}/>
+                        <Route path="/login" element={<Login />}/>
+                        <Route path="/register" element={<Register />}/>
                     </Routes>
 
                 </main>
