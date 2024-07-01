@@ -15,10 +15,12 @@ function Login() {
     return (
     <>
         <h2 className='text-white text-3xl font-extrabold'>Login</h2>
+
         <form 
             onSubmit={handleSubmit(onSubmit)} 
             className="flex flex-col items-center justify-start gap-10 h-80 mb-10"
         >
+            
         <div className="flex flex-col justify-between gap-1">
             <Input
                 {...register('email', { required: 'Email is required',

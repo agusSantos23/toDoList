@@ -1,20 +1,31 @@
 import { useEffect, useRef } from "react"
-import Button from "../components/Button";
+import {useForm} from 'react-hook-form'
+import Button from "../components/Button.jsx";
 
 function Home(){
+    const {register, handleSubmit} = useForm()
     const textareaRef = useRef(null);
+
+    const onSubmit = (data) =>{
+        console.log(data);
+    }
+
 
     useEffect(() => {
 
         const textarea = textareaRef.current;
         
-        textarea.addEventListener('input', (event) => {
-
+        const handleInput = (event) => {
             const textarea = event.target;
             textarea.style.height = 'auto';
             textarea.style.height = `${textarea.scrollHeight}px`;
-        });
+        };
 
+        textarea.addEventListener('input', handleInput);
+
+        return () => {
+            textarea.removeEventListener('input', handleInput);
+        };
            
     }, []);
     
@@ -24,8 +35,21 @@ function Home(){
 
     return(
         <>
-            <form action="" className="flex justify-between gap-8  mx-5">
-                <textarea ref={textareaRef} rows="1" className=" text-xl text-white bg-transparent w-full overflow-hidden p-2 border border-gray-300 rounded resize-none" placeholder={frase}></textarea>
+            <form 
+                onSubmit={handleSubmit(onSubmit)} 
+                className="flex justify-between gap-8  mx-5">
+
+                <textarea 
+                    {...register('task')}  
+                    name="task"
+                    id="task"
+                    ref={textareaRef} 
+                    rows="1" 
+                    className="text-xl text-white bg-transparent w-full overflow-hidden p-2 border border-gray-300 rounded resize-none" 
+                    autoFocus 
+                    placeholder={frase}
+
+                ></textarea>
 
                 <Button contenido="Agregar" />
             </form>
